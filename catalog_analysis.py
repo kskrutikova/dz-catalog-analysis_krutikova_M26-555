@@ -197,3 +197,26 @@ avg = average_rating(movies)
 high_rated = {
     movie["title"]: movie["rating"] for movie in movies if movie["rating"] > avg
 }
+
+
+def all_genres(movies):
+    result = set()
+    for movie in movies:
+        result |= movie["genres"]
+    return result
+
+
+def common_actors(movie1, movie2):
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    genres_a = set()
+    for movie in movies_a:
+        genres_a |= movie["genres"]
+
+    genres_b = set()
+    for movie in movies_b:
+        genres_b |= movie["genres"]
+
+    return genres_a - genres_b
