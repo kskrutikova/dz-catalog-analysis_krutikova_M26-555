@@ -97,7 +97,7 @@ def catalog_age_stats(movies, current_year=2026):
 def duration_in_hours(minutes):
     hours = minutes // 60
     mins = minutes % 60
-    return f"{hours}ч {mins}мин"
+    return f"{hours}ч {mins}м"
 
 
 def rating_tier(rating):
@@ -143,3 +143,25 @@ def count_long_movies(movies, threshold=120):
         if movie["duration_min"] > threshold:
             count += 1
     return count
+
+
+def normalize_title(title):
+    words = title.split()
+    result = []
+    for word in words:
+        result.append(word[0].upper() + word[1:])
+    return " ".join(result)
+
+
+def make_slug(title):
+    return title.lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    genres = ", ".join(sorted(movie["genres"]))
+    duration = duration_in_hours(movie["duration_min"])
+    return (
+        f'"{normalize_title(movie["title"])}" '
+        f"({movie['year']}) — {movie['rating']}/10, "
+        f"{duration}, жанры: {genres}"
+    )
